@@ -2,21 +2,29 @@
 public class Academico {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 		/* Crie uma aplicação crie automaticamente uma turma com 5 alunos, e permita ao usuário
-		 *  realizar chamadas, adicionar avaliações (até 3), e verificar a média dos alunos.
+		 * realizar chamadas, adicionar avaliações (até 3), e verificar a média dos alunos.
 		 */
-		
-		Aluno aluno[] = new Aluno[5];
-		Turma turma = new Turma();
+
+		int qtdAlunos = 10;
+		Aluno aluno[] = new Aluno[qtdAlunos];
+		Turma turma = new Turma("Algoritmos II");
 		Aula aula = new Aula();
 		Console console	= new Console();
 
-		for (int i=0; i<5; i++){
-			aluno[i] = console.definirAluno(i);
+		for (int i=0; i<qtdAlunos; i++){
+			aluno[i] = new Aluno("Aluno"+(i + 1), 63000+i+1);
 		}
-
+		
+		for (int i=aluno.length-1; i>=0; i--){
+			turma.adicionaAluno(aluno[i]);
+			i--;
+		}
+		
+		//console.exibirAlunos(aluno);
+		System.out.println("\n\n\n");
+		console.exibirTurma(turma);
+		
 		
 	}
 }

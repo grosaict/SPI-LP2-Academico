@@ -7,6 +7,7 @@ public class Aula {
 	private String nomeDisciplina;
 	private String dataAula;
 	private String atividades;
+	private Aluno[] aluno;
 
 	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	Scanner leia = new Scanner(System.in);
