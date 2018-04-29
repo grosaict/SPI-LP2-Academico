@@ -9,9 +9,6 @@ public class Console {
 	
 	private static void imprimeAluno(Aluno aluno) {
 		System.out.println("["+aluno.getMatricula()+"] "+aluno.getNome());
-		/*for (int i = 0; i < 3; i++) {
-			Avaliacao avaliacao = aluno.getAvaliacao(i);
-		}*/
 	}
 
 	public void exibirTurma(Turma turma) {
@@ -23,9 +20,5 @@ public class Console {
 		for (int i=0; i<qdtAlunosTurma; i++){
 			imprimeAluno(turma.getAlunoTurma(i));
 		}
-		
-		
-		
 	}
-	
 }

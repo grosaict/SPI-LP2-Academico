@@ -1,4 +1,3 @@
-
 public class Turma {
 	private String nomeDisciplina;
 	private int qtdAlunoTurma = 0;
@@ -12,8 +11,12 @@ public class Turma {
 	}
 
 	public void adicionaAluno(Aluno aluno) {
-		this.aluno[this.qtdAlunoTurma] = aluno;
-		this.qtdAlunoTurma++;
+		if (qtdAlunoTurma >= maxAlunoTurma){
+			System.err.println("Operação não permitida!!");
+		}else{
+			this.aluno[this.qtdAlunoTurma] = aluno;
+			this.qtdAlunoTurma++;			
+		}
 	}
 
 	public String getNomeTurma() {

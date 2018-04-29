@@ -1,4 +1,3 @@
-
 public class Academico {
 
 	public static void main(String[] args) {
@@ -9,22 +8,23 @@ public class Academico {
 		int qtdAlunos = 10;
 		Aluno aluno[] = new Aluno[qtdAlunos];
 		Turma turma = new Turma("Algoritmos II");
-		Aula aula = new Aula();
 		Console console	= new Console();
 
+		//cria automaticamente X alunos
 		for (int i=0; i<qtdAlunos; i++){
-			aluno[i] = new Aluno("Aluno"+(i + 1), 63000+i+1);
+			aluno[i] = new Aluno();
+			aluno[i].setNome("Aluno"+(i + 1));
+			aluno[i].setMatricula(63000+i+1);
 		}
 		
+		//insere 5 alunos na turma
 		for (int i=aluno.length-1; i>=0; i--){
 			turma.adicionaAluno(aluno[i]);
 			i--;
 		}
 		
 		//console.exibirAlunos(aluno);
-		System.out.println("\n\n\n");
+		System.out.println("\n");
 		console.exibirTurma(turma);
-		
-		
 	}
 }
