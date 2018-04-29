@@ -3,8 +3,8 @@ import java.util.Date;
 
 public class Avaliacao {
 	
-	public double nota;
-	public Date dataAvaliacao;
+	private double nota;
+	private Date dataAvaliacao;
 	
 	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
