@@ -3,30 +3,30 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class Aula {
-	private String nomeDisciplina;
-	private String dataAula;
+	private int maxAlunoAula;
+	private Aluno[] aluno;
+	private String dataNomeAula;
 	private String atividades;
-	private PresencaAluno[] presenca;
 
-	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 	Scanner leia = new Scanner(System.in);
 	
-	public Aula(String nomeDisciplina, int qtdAlunoAula){
-		this.nomeDisciplina = nomeDisciplina;
-		this.presenca = new PresencaAluno[qtdAlunoAula];
-	}
-
-	public void registraAula() {
-		this.dataAula = dateFormat.format(new Date());
-		System.out.println(this.dataAula+" - "+this.nomeDisciplina);
+	public Aula(String nomeDisciplina, int maxAlunoAula) {
+		this.maxAlunoAula = maxAlunoAula;
+		Aluno[] aluno = new Aluno[maxAlunoAula];
+		this.aluno = aluno;
+		this.dataNomeAula = dateFormat.format(new Date())+" - "+nomeDisciplina;
+		System.out.println(this.dataNomeAula);
 		System.out.println("Informe as atividades realizadas nessa aula: ");
 		this.atividades = leia.nextLine();
-		realizaChamada();
 	}
 
-	private void realizaChamada() {
-		
-		
+	public String getDataNomeAula() {
+		return this.dataNomeAula;
+	}
+
+	public String getAtividades() {
+		return this.atividades;
 	}
 
 }
