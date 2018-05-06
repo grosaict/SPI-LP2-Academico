@@ -5,7 +5,9 @@ public class Academico {
 		 * realizar chamadas, adicionar avaliações (até 3), e verificar a média dos alunos.
 		 */
 
-		char itemMenu;
+		char itemMenu, itemSubMenu;
+		String opcoes, msg;
+		int nroAula;
 		int qtdAlunos = 50;
 		int maxAlunosTurma = 5;
 		Aluno aluno[] = new Aluno[qtdAlunos];
@@ -36,16 +38,54 @@ public class Academico {
 		//console.exibirTurma(turma);
 		
 		do{
-			itemMenu = console.menuPrincipal();;
+			opcoes = "CABS";
+			msg = "[C]ontrole de aulas\n[A]valia aluno\n[B]oletim dos alunos\n[S]air";
+			itemMenu = console.menu(opcoes,msg);
 			switch (itemMenu){
-			case 'R':	//Registro de aulas e presenças
-				turma.registraAula();
-				console.listaAulas(turma.getAula(), turma.getQtdAulas());
+			case 'C':	//Controle de aulas e presenças
+				opcoes = msg = "";
+				if (turma.getQtdAulas() < turma.getMaxAulas()){
+					opcoes = "N";
+					msg = "[N]ova aula\n";
+				}
+				if (turma.getQtdAulas() > 0){
+					opcoes += "C";
+					msg += "[C]onsulta aula\n";
+				}
+				opcoes += "V";
+				msg += "[V]oltar";
+				itemSubMenu = console.menu(opcoes,msg);
+				switch (itemSubMenu){
+				case 'N':	//Nova aula
+					turma.registraAula();
+					opcoes = "SN";
+					msg = "Deseja realizar chamada? ([S]im [N]ão)";
+					itemSubMenu = console.menu(opcoes,msg);
+					if (itemSubMenu == 'S'){
+						turma.registraPresencaAula(turma.getQtdAulas()-1);
+					}
+					break;
+				case 'C':	//Consulta aula
+					console.listaAulas(turma.getAula(), turma.getQtdAulas());
+					opcoes = "SN";
+					msg = "Deseja realizar chamada? ([S]im [N]ão)";
+					itemSubMenu = console.menu(opcoes,msg);
+					if (itemSubMenu == 'S'){
+						System.out.println("Informe o nro da aula: ");
+						nroAula = console.retornaAula(turma.getQtdAulas());
+						if (nroAula > 0){
+							turma.registraPresencaAula(nroAula-1);
+						}else{
+							System.err.println("Aula informada não existe!!!");
+						}
+					}
+					break;
+				}
 				break;
 			case 'A':	//Avalia aluno
 				//
 				break;
-			case 'C':	//Consulta media dos alunos
+			case 'B':	//Boletim dos alunos
 				//
 				break;
 			}

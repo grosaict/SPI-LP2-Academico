@@ -26,15 +26,17 @@ public class Turma {
 	}
 	
 	public void registraAula() {
-		if (this.qtdAulas >= this.maxAulas){
-			System.err.println("Operação não permitida!!");
-		}else{
-			Aula a = new Aula(this.nomeDisciplina, this.qtdAlunoTurma);
+		if (this.qtdAulas < this.maxAulas){
+			Aula a = new Aula(this.nomeDisciplina, this.qtdAlunoTurma, this.aluno);
 			this.aula[qtdAulas] = a;
-			this.qtdAulas++;			
+			this.qtdAulas++;
 		}
 	}
-
+	
+	public void registraPresencaAula(int codAula) {
+		this.aula[codAula].registraTodasPresencas();
+	}
+	
 	public String getNomeTurma() {
 		return this.nomeDisciplina;
 	}
@@ -57,6 +59,10 @@ public class Turma {
 
 	public int getQtdAulas() {
 		return this.qtdAulas;
-	}	
+	}
+
+	public int getMaxAulas() {
+		return this.maxAulas;
+	}
 
 }
