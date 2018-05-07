@@ -37,12 +37,28 @@ public class Turma {
 		this.aula[codAula].registraTodasPresencas();
 	}
 	
+	public void registraAvaliacaoAluno(int codAluno) {
+		double nota;
+		if (this.aluno[codAluno].getQtdAvaliacoes() >= this.aluno[codAluno].getMaxAvaliacoes()){
+			System.out.println("Todas as avaliações já registradas para o aluno");
+		}else{
+			nota = Console.retornaAvaliacao();
+			if (nota != 99){
+				this.aluno[codAluno].registraAvaliacao(nota);
+			}
+		}
+	}
+	
 	public String getNomeTurma() {
 		return this.nomeDisciplina;
 	}
 
 	public int getQtdAlunosTurma() {
 		return this.qtdAlunoTurma;
+	}
+
+	public Aluno[] getAluno() {
+		return this.aluno;
 	}
 
 	public Aluno getAlunoTurma(int i) {

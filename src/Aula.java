@@ -9,18 +9,20 @@ public class Aula {
 	private String dataNomeAula;
 	private String atividades;
 
-	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-	Scanner leia = new Scanner(System.in);
-	
 	public Aula(String nomeDisciplina, int maxAlunoAula, Aluno[] aluno) {
-		this.maxAlunoAula = maxAlunoAula;
-		this.alunoAula = aluno;
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		Scanner leia = new Scanner(System.in);
+		
 		String[] presenca = new String[maxAlunoAula];
 		for (int i=0;i<maxAlunoAula;i++){
 			presenca[i] = "Presente";
 		}
+		
+		this.maxAlunoAula = maxAlunoAula;
+		this.alunoAula = aluno;
 		this.presenca = presenca;
 		this.dataNomeAula = dateFormat.format(new Date())+" - "+nomeDisciplina;
+
 		System.out.println(this.dataNomeAula);
 		System.out.println("Informe as atividades realizadas nessa aula: ");
 		this.atividades = leia.nextLine();
@@ -28,35 +30,37 @@ public class Aula {
 	
 	public void registraTodasPresencas() {
 		for (int i=0;i<maxAlunoAula;i++){
-			listaAlunoAula(i);
+			Console.exibirAluno(i, this.alunoAula[i]);
+			Console.exibirPresenca(i, this.presenca[i]);
 			registraPresencaAluno(i);
 		}
 	}
 	
 	public void registraPresencaAluno(int codAluno){
-		Console c = new Console();
 		char itemMenu;
+
 		if (this.presenca[codAluno].equals("Ausente")){
-			itemMenu = c.menu("PM","[P]resente / [M]anter registro");
+			itemMenu = Console.menu("PM","[P]resente / [M]anter ausencia");
 		}else{
-			itemMenu = c.menu("AM","[A]usente / [M]anter registro");
+			itemMenu = Console.menu("AM","[A]usente / [M]anter presença");
 		}
+		
 		switch (itemMenu){
-		case 'P': this.presenca[codAluno] = "Presente";	break;
-		case 'A': this.presenca[codAluno] = "Ausente";	break;
+			case 'P': this.presenca[codAluno] = "Presente";	break;
+			case 'A': this.presenca[codAluno] = "Ausente";	break;
 		}
-	}
-	
-	public void listaAlunoAula(int codAluno){
-		System.out.println("["+(codAluno+1)+"] "+this.alunoAula[codAluno].getMatricula()+" - "+this.alunoAula[codAluno].getNome()+" - "+this.presenca[codAluno]);
 	}
 	
 	public int getMaxAlunoAula() {
 		return this.maxAlunoAula;
 	}
 	
-	public Aluno[] getAlunoAula() {
-		return this.alunoAula;
+	public Aluno getAlunoAula(int codAluno) {
+		return this.alunoAula[codAluno];
+	}
+	
+	public String getPresenca(int codAluno) {
+		return this.presenca[codAluno];
 	}
 
 	public String getDataNomeAula() {
