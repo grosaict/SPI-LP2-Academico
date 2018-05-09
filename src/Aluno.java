@@ -1,3 +1,4 @@
+
 public class Aluno {
 	private String nome;
 	private int matricula;
@@ -5,26 +6,29 @@ public class Aluno {
 	private int maxAvaliacoes = 3;
 	private Avaliacao[] avaliacao = new Avaliacao[maxAvaliacoes];
 
-	public void registraAvaliacao(double nota) {
+	public boolean registraAvaliacao(double nota) {
 		if (this.qtdAvaliacoes < this.maxAvaliacoes){
 			Avaliacao avaliacao = new Avaliacao(nota);
 			this.avaliacao[qtdAvaliacoes] = avaliacao;
 			this.qtdAvaliacoes++;
+			return true;
+		}else{
+			return false;
 		}
 	}
 	
-	public Avaliacao[] getAvaliacao() {
+	public Avaliacao[] getAvaliacoes() {
 		return this.avaliacao;
-	}
-
-	public String getNome() {
-		return this.nome;
 	}
 
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
+	public String getNome() {
+		return this.nome;
+	}
+	
 	public void setMatricula(int matricula) {
 		this.matricula = matricula;
 	}

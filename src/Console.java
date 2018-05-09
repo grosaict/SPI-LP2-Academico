@@ -7,13 +7,13 @@ public class Console {
 		for (int j=0; j<qtdAlunos; j++) {
 			exibirAluno(j, aluno[j]);
 			if (exibeAvaliacao){
-				exibirAvaliacaoAluno(aluno[j].getAvaliacao(),aluno[j].getQtdAvaliacoes());
+				exibirAvaliacaoAluno(aluno[j].getAvaliacoes(),aluno[j].getQtdAvaliacoes());
 			}
 		}
 	}
 	
 	private static void exibirAvaliacaoAluno(Avaliacao[] avaliacao, int qtdAvaliacoes) {
-		DecimalFormat decFormat = new DecimalFormat("#.00");
+		DecimalFormat decFormat = new DecimalFormat("#0.00");
 		
 		double media = 0;
 		
@@ -21,7 +21,7 @@ public class Console {
 			System.out.print("\n    [sem avaliação]");
 		}else{
 			for (int i=0;i<qtdAvaliacoes;i++){
-				System.out.print("\n    "+avaliacao[i].getDataNota()+" ["+(i+1)+"ª nota] "+avaliacao[i].getNota());
+				System.out.print("\n    "+avaliacao[i].getDataNota()+" ["+(i+1)+"ª nota] "+decFormat.format(avaliacao[i].getNota()));
 				media += avaliacao[i].getNota();
 			}
 			media = media / qtdAvaliacoes;
@@ -30,7 +30,9 @@ public class Console {
 	}
 
 	public static void exibirAluno(int codAluno, Aluno aluno) {
-		System.out.print("\n["+(codAluno+1)+"] "+aluno.getMatricula()+" - "+aluno.getNome());
+		System.out.print("\n[");
+		System.out.printf("%02d",codAluno+1);
+		System.out.print("] "+aluno.getMatricula()+" - "+aluno.getNome());
 	}
 
 	public static void exibirPresenca(int i, String presenca) {
@@ -39,7 +41,7 @@ public class Console {
 	
 	public static void exibirTurma(Turma turma, boolean exibeAvaliacao) {
 		System.out.print("\n\n"+turma.getNomeTurma());
-		exibirAlunos(turma.getAluno(), turma.getQtdAlunosTurma(), exibeAvaliacao);
+		exibirAlunos(turma.getAlunoTurma(), turma.getQtdAlunosTurma(), exibeAvaliacao);
 	}
 	
 	public static void exibirAulas(Aula[] aula, int qtdAulas){
@@ -58,26 +60,47 @@ public class Console {
 		int nroA;
 		System.out.println(msg);
 		Scanner leia = new Scanner(System.in);
-		nroA = leia.nextInt();
-		if (nroA > 0 && nroA <= qtdA){
-			return nroA;
-		}else{
-			System.err.println("Nro informado não existe!!!");
-			return 0;
+		try {
+			nroA = leia.nextInt();
+			if (nroA < 0 || nroA > qtdA){
+				throw new Exception("Nro informado não existe!!!");
+			}
+		}catch(Exception e){
+        	System.err.println(">> "+e.getMessage()+" << Informe novamente. [0] para desistir!!");
+        	nroA = retornaA(msg, qtdA);
 		}
+		return nroA;
 	}
 	
 	public static double retornaAvaliacao() {
 		double nota;
 		Scanner leia = new Scanner(System.in);
-		System.out.println("Informe a nota para o aluno: (0 a 10)");
-		nota = leia.nextDouble();
-		if (nota >= 0 && nota <= 10){
-			return nota;
-		}else{
-			System.err.println("Valor inválido. Nota não registrada!");
-			return 99;
+		System.out.println("Informe a nota para o aluno: (0 a 10) /  (99) para desistir!!");
+		try{
+			nota = leia.nextDouble();
+			if ((nota < 0 || nota > 10) && (nota != 99)){
+				throw new Exception("Valor inválido.");
+			}
+		}catch(Exception e){
+			System.err.println(">> "+e.getMessage()+" << Informe novamente. (99) para desistir!!");
+			nota = retornaAvaliacao();
 		}
+		return nota;
+	}
+	
+	public static String retornaAtividadesAula(String dataNomeAula){
+		String atividades;
+		Scanner leia = new Scanner(System.in);
+		System.out.println(dataNomeAula);
+		System.out.println("Informe as atividades realizadas nessa aula: ");
+		do{
+			atividades = leia.nextLine();
+			if (atividades.length() <= 10 || atividades.trim().length() <= 5){
+				System.err.println("Mínimo 10 caracteres. Informe as atividades novamente.");
+				atividades = "";
+			}
+		}while(atividades.length() <= 10 || atividades.trim().length() <= 5);
+		return atividades.toUpperCase();
 	}
 	
 	public static char menu(String opcoes, String msg){

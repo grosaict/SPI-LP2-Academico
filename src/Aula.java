@@ -11,10 +11,9 @@ public class Aula {
 
 	public Aula(String nomeDisciplina, int maxAlunoAula, Aluno[] aluno) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		Scanner leia = new Scanner(System.in);
 		
 		String[] presenca = new String[maxAlunoAula];
-		for (int i=0;i<maxAlunoAula;i++){
+		for (int i=0;i<maxAlunoAula;i++){	//Atribui presença para todos alunos por default
 			presenca[i] = "Presente";
 		}
 		
@@ -22,10 +21,7 @@ public class Aula {
 		this.alunoAula = aluno;
 		this.presenca = presenca;
 		this.dataNomeAula = dateFormat.format(new Date())+" - "+nomeDisciplina;
-
-		System.out.println(this.dataNomeAula);
-		System.out.println("Informe as atividades realizadas nessa aula: ");
-		this.atividades = leia.nextLine();
+		this.atividades = Console.retornaAtividadesAula(this.dataNomeAula);
 	}
 	
 	public void registraTodasPresencas() {
@@ -38,13 +34,17 @@ public class Aula {
 	
 	public void registraPresencaAluno(int codAluno){
 		char itemMenu;
+		String opcoes, msg;
 
 		if (this.presenca[codAluno].equals("Ausente")){
-			itemMenu = Console.menu("PM","[P]resente / [M]anter ausencia");
+			opcoes = "PM";
+			msg = "[P]resente / [M]anter ausencia";
 		}else{
-			itemMenu = Console.menu("AM","[A]usente / [M]anter presença");
+			opcoes = "AM";
+			msg = "[A]usente / [M]anter presença";
 		}
 		
+		itemMenu = Console.menu(opcoes,msg);
 		switch (itemMenu){
 			case 'P': this.presenca[codAluno] = "Presente";	break;
 			case 'A': this.presenca[codAluno] = "Ausente";	break;

@@ -1,3 +1,4 @@
+
 public class Turma {
 	private String nomeDisciplina;
 	
@@ -12,43 +13,43 @@ public class Turma {
 	public Turma (String nomeDiscuplina, int maxAlunoTurma){
 		this.nomeDisciplina = nomeDiscuplina;
 		this.maxAlunoTurma = maxAlunoTurma;
-		Aluno[] aluno = new Aluno[maxAlunoTurma];
-		this.aluno = aluno;
+		this.aluno = new Aluno[maxAlunoTurma];
 	}
 
-	public void adicionaAluno(Aluno aluno) {
+	public boolean adicionaAluno(Aluno aluno) {
 		if (this.qtdAlunoTurma >= this.maxAlunoTurma){
-			System.err.println("Turma lotada. Operação não permitida!!");
+			return false;
 		}else{
 			this.aluno[this.qtdAlunoTurma] = aluno;
-			this.qtdAlunoTurma++;			
+			this.qtdAlunoTurma++;
+			return true;
 		}
 	}
 	
-	public void registraAula() {
+	public boolean registraAula() {
 		if (this.qtdAulas < this.maxAulas){
-			Aula a = new Aula(this.nomeDisciplina, this.qtdAlunoTurma, this.aluno);
-			this.aula[qtdAulas] = a;
+			this.aula[qtdAulas] = new Aula(this.nomeDisciplina, this.qtdAlunoTurma, this.aluno);
 			this.qtdAulas++;
+			return true;
+		}else{
+			return false;
 		}
 	}
-	
+
 	public void registraPresencaAula(int codAula) {
 		this.aula[codAula].registraTodasPresencas();
 	}
 	
-	public void registraAvaliacaoAluno(int codAluno) {
+	public boolean registraAvaliacaoAluno(int codAluno) {
 		double nota;
-		if (this.aluno[codAluno].getQtdAvaliacoes() >= this.aluno[codAluno].getMaxAvaliacoes()){
-			System.out.println("Todas as avaliações já registradas para o aluno");
+		nota = Console.retornaAvaliacao();
+		if (nota != 99){
+			return this.aluno[codAluno].registraAvaliacao(nota);
 		}else{
-			nota = Console.retornaAvaliacao();
-			if (nota != 99){
-				this.aluno[codAluno].registraAvaliacao(nota);
-			}
+			return false;
 		}
 	}
-	
+
 	public String getNomeTurma() {
 		return this.nomeDisciplina;
 	}
@@ -57,7 +58,7 @@ public class Turma {
 		return this.qtdAlunoTurma;
 	}
 
-	public Aluno[] getAluno() {
+	public Aluno[] getAlunoTurma() {
 		return this.aluno;
 	}
 
